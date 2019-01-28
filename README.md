@@ -15,7 +15,7 @@ git clone https://github.com/osksun/D0020E.git
 ```
 Detta kommer att skapa en mapp som heter D0020E som är "up-to-date" med repon som ligger uppe på github.
 Gå in i mappen
-```
+
 Efter att ha klonat repon defaultas man till branchen master.
 Du kan se vilken branch du är på genom att skriva (den som är markerad med * är den du är på)
 ```
