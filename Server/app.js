@@ -10,7 +10,7 @@ var app = express();
 
 var indexRouter = require('./routes/index');
 
-
+var clientUpdater = require('./Broadcasting/clientUpdater');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -19,32 +19,24 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-//initialize a simple http server
+//Initialize a simple http server
 const server = http.createServer(app);
 
-//initialize the WebSocket server instance
+//Initialize the WebSocket server instance
 const wss = new WebSocket.Server({ server });
 
 
-wss.on('connection', function(ws){
 
-    //connection is up, let's add a simple simple event
-    ws.on('message', function(msg) {
-
-        //log the received message and send it back to the client
-        console.log('received:' + msg);
-        ws.send('Hello, you sent: ' + msg);
-    });
-
-    //send immediatly a feedback to the incoming connection    
-    ws.send('Hi there, I am a WebSocket server');
-});
-
-//start our server
+//Start the server on port 3000
 server.listen(process.env.PORT || 3000, () => {
-    console.log(`Server started on port ${server.address().port} :)`);
+    console.log(`Server started on port ${server.address().port}`);
 });
 
 
+// Routes for Websocket
+var WSRoute = require('./routes/websocket')(wss)
+
+
+// Apply routes for HTML
 app.use('/', indexRouter);
 

@@ -122,3 +122,13 @@ rethink.connect({host:"35.180.30.36", port:28016, user: "admin", password:"***RE
     });
   });
 });
+
+
+/*
+wss.clients.forEach(function each(client) {
+  if (client !== ws && client.readyState === WebSocket.OPEN) {
+    client.send(data);
+  }
+});
+
+*/
