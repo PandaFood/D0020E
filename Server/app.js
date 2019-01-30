@@ -5,12 +5,15 @@ var logger = require('morgan');
 var debug = require('debug')('server:server');
 var http = require('http');
 var WebSocket = require('ws');
+var ConsoleInput = require('./ConsoleInput');
+var indexRouter = require('./routes/index');
+var ClientUpdater = require('./Broadcasting/clientUpdater');
+
 
 var app = express();
 
-var indexRouter = require('./routes/index');
 
-var clientUpdater = require('./Broadcasting/clientUpdater');
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -35,6 +38,11 @@ server.listen(process.env.PORT || 3000, () => {
 
 // Routes for Websocket
 var WSRoute = require('./routes/websocket')(wss)
+
+var clientUpdater = new ClientUpdater(wss);
+
+var ci1 = new ConsoleInput(wss,clientUpdater);
+ci1.start();
 
 
 // Apply routes for HTML
