@@ -5,10 +5,15 @@ var logger = require('morgan');
 var debug = require('debug')('server:server');
 var http = require('http');
 var WebSocket = require('ws');
+var ConsoleInput = require('./ConsoleInput');
+var indexRouter = require('./routes/index');
+var ClientUpdater = require('./Broadcasting/clientUpdater');
+var WideFind = require('./WidefindSystem/WideFind');
+
+
 
 var app = express();
 
-var indexRouter = require('./routes/index');
 
 
 
@@ -19,32 +24,34 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-//initialize a simple http server
+//Initialize a simple http server
 const server = http.createServer(app);
 
-//initialize the WebSocket server instance
+//Initialize the WebSocket server instance
 const wss = new WebSocket.Server({ server });
 
 
-wss.on('connection', function(ws){
 
-    //connection is up, let's add a simple simple event
-    ws.on('message', function(msg) {
-
-        //log the received message and send it back to the client
-        console.log('received:' + msg);
-        ws.send('Hello, you sent: ' + msg);
-    });
-
-    //send immediatly a feedback to the incoming connection    
-    ws.send('Hi there, I am a WebSocket server');
-});
-
-//start our server
+//Start the server on port 3000
 server.listen(process.env.PORT || 3000, () => {
-    console.log(`Server started on port ${server.address().port} :)`);
+    console.log(`Server started on port ${server.address().port}`);
 });
 
 
+// Routes for Websocket
+var WSRoute = require('./routes/websocket')(wss)
+
+var clientUpdater = new ClientUpdater(wss);
+var wideFind = new WideFind();
+
+
+var ci1 = new ConsoleInput(wss,clientUpdater);
+ci1.start(wideFind);
+
+
+
+
+
+// Apply routes for HTML
 app.use('/', indexRouter);
 
