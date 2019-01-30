@@ -8,6 +8,8 @@ var WebSocket = require('ws');
 var ConsoleInput = require('./ConsoleInput');
 var indexRouter = require('./routes/index');
 var ClientUpdater = require('./Broadcasting/clientUpdater');
+var WideFind = require('./WidefindSystem/WideFind');
+
 
 
 var app = express();
@@ -40,9 +42,14 @@ server.listen(process.env.PORT || 3000, () => {
 var WSRoute = require('./routes/websocket')(wss)
 
 var clientUpdater = new ClientUpdater(wss);
+var wideFind = new WideFind();
+
 
 var ci1 = new ConsoleInput(wss,clientUpdater);
-ci1.start();
+ci1.start(wideFind);
+
+
+
 
 
 // Apply routes for HTML

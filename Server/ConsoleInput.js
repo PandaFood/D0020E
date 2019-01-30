@@ -1,11 +1,20 @@
-var rethink = require("rethinkdb");
+/**
+ * @fileOverview Console commands for debug purpuse
+ */
 
-
+/** 
+ * @constructor 
+ */
 module.exports = function (websocketServer, clientUpdater) {
     console.log("WS server set in consoleInput as " + websocketServer);
     console.log("clientUpdater set in consoleInput as " + websocketServer);
 
-    this.start = function () {
+
+    
+    /**
+     * @callback sensorObject
+     */
+    this.start = function (sensorObject) {
         console.log("Started catching input...");
 
         var stdin = process.openStdin();
@@ -18,33 +27,8 @@ module.exports = function (websocketServer, clientUpdater) {
                 d.toString().trim() + "]");
 
             if (d.toString().trim() == "u") {
-
-                rethink.connect({
-                    host: "35.180.30.36",
-                    port: 28016,
-                    user: "admin",
-                    password: "UnlikelySnuggleBuild"
-                }, function (error, database) {
-                    if (error) {
-                        throw error;
-                    }
-
-                    console.log("Getting most recent positions... ");
-
-
-                    rethink.db("wf100").table("current_state").run(database, function (error, result) {
-                        if (error) {
-                            throw error;
-                        }
-                        result.each(function (error, row) {
-                            if (error) {
-                                throw error;
-                            }
-
-                            clientUpdater.sendBroadcastUpdate(row);
-                        });
-                    })
-                });
+                sensorObject.GetLatestUpdates(clientUpdater);
+                
             }
         });
 

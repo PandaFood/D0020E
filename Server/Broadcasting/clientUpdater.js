@@ -1,40 +1,12 @@
-var rethink = require("rethinkdb");
+/**
+ * @fileOverview Part responsible for sending the clients updates
+ */
+
 var WebSocket = require('ws');
 
-/*
-    Standardized JSON format
-*/
-function jsonify(data){
-
-    var json = {
-        version:1,
-        action:0,
-        entities:[]
-    };
-
-    json.entities.push({
-        id:data.id,
-        type:"human",
-        data:{
-        position:{
-            x: data.pos[0],
-            y: data.pos[2],
-            z: data.pos[1]
-        },
-        velocity:{
-            x: data.vel[0],
-            y: data.vel[2],
-            z: data.vel[1]
-        },
-        battery: data.bat,
-        signal: data.rssi
-        }
-    });
-
-    return JSON.stringify(json);
-}
-
-
+/**
+ * @param  {} wss Websocket Server to use
+ */
 module.exports = function(wss){
   console.log("WS server set in clientUpdater as " + wss);
 
@@ -43,7 +15,7 @@ module.exports = function(wss){
 
       wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocket.OPEN) {
-          client.send(jsonify(data));
+          client.send(data);
         }
       });
 

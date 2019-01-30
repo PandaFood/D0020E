@@ -1,7 +1,14 @@
+/**
+ * @fileOverview Websocket Handler
+ */
+
+
 const WebSocket = require('ws');
 const Command = require('./command')
 
-
+/**
+ * @param  {} wss Websocket Server to use
+ */
 module.exports = function(wss){
 
     wss.on('connection', function connection(ws, req){
