@@ -1,0 +1,6 @@
+{
+    "recurseDepth": 10,
+    "source": {
+        "exclude": ["./node_modules"]
+    }
+}
