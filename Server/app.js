@@ -1,3 +1,6 @@
+/**
+ * @fileOverview Main file
+ */
 var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
@@ -7,7 +10,7 @@ var http = require('http')
 var WebSocket = require('ws')
 var ConsoleInput = require('./consoleinput')
 var indexRouter = require('./routes/index')
-var SessionManager = require('./Session System/sessionSystem')
+var SessionManager = require('./Session System/sessionManager')
 var SensorManager = require('./Sensor System/sensorManager')
 
 var app = express()

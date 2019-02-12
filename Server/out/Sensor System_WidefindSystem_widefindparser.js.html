@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: routes/command.js</title>
+    <title>JSDoc: Source: Sensor System/WidefindSystem/widefindparser.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: routes/command.js</h1>
+    <h1 class="page-title">Source: Sensor System/WidefindSystem/widefindparser.js</h1>
 
     
 
@@ -27,14 +27,41 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @fileOverview Parses commands sent from user.
+ * @fileOverview Class for parsing WideFind data to standardized json format
  */
 
 /**
-  * @param  {} msg
-  */
-module.exports.parse = function (msg) {
-  console.log(msg.split(' '))
+ *     Outputs standardized JSON format
+ *  @param data Data to parse
+ *  @return {JSON} The input data in JSON format
+ */
+module.exports.jsonify = function (data) {
+  var json = {
+    version: 1,
+    action: 0,
+    entities: []
+  }
+
+  json.entities.push({
+    id: data.id,
+    type: 'human',
+    data: {
+      position: {
+        x: data.pos[0],
+        y: data.pos[2],
+        z: data.pos[1]
+      },
+      velocity: {
+        x: data.vel[0],
+        y: data.vel[2],
+        z: data.vel[1]
+      },
+      battery: data.bat,
+      signal: data.rssi
+    }
+  })
+
+  return JSON.stringify(json)
 }
 </code></pre>
         </article>

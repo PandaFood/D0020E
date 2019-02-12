@@ -1,4 +1,6 @@
-
+/**
+ * @fileOverview A single session
+ */
 var id = 0
 
 function getNextID () {
