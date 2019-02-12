@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: routes/command.js</title>
+    <title>JSDoc: Source: Sensor System/sensorManager.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: routes/command.js</h1>
+    <h1 class="page-title">Source: Sensor System/sensorManager.js</h1>
 
     
 
@@ -27,14 +27,20 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @fileOverview Parses commands sent from user.
+ * @fileOverview Manages all sensors
  */
+var WideFind = require('./WidefindSystem/widefind')
 
-/**
-  * @param  {} msg
-  */
-module.exports.parse = function (msg) {
-  console.log(msg.split(' '))
+var wideFind = new WideFind()
+
+module.exports = class sensorManager {
+  /**
+   *  Handling all the different sensors
+   *  @return {WideFind} The WideFind Sensor
+   */
+  get wideFind () {
+    return wideFind
+  }
 }
 </code></pre>
         </article>

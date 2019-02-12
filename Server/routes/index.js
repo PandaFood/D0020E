@@ -1,3 +1,6 @@
+/**
+ * @fileOverview Handling routes for http requests
+ */
 var express = require('express')
 var router = express.Router()
 

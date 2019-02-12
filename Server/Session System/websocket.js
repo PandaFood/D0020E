@@ -2,7 +2,6 @@
  * @fileOverview Websocket Handler
  */
 
-const Command = require('../routes/command')
 const WEBSOCKET = require('ws')
 
 module.exports = class WebsocketHandler {
@@ -32,11 +31,11 @@ function init (wss, session) {
     // TODO: AUTHENTICATION
 
     ws.on('message', function (msg) {
-      //Command.parse(msg)
+      // Command.parse(msg)
 
       // Log the received message and send it back to the client
       console.log(connectedIP + ' sent: ' + msg)
-      //ws.send('Echo: ' + msg)
+      // ws.send('Echo: ' + msg)
     })
 
     // TODO: FIX INITIAL CONFIG SENDING

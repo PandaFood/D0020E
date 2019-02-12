@@ -5,6 +5,7 @@
 /**
  *     Outputs standardized JSON format
  *  @param data Data to parse
+ *  @return {JSON} The input data in JSON format
  */
 module.exports.jsonify = function (data) {
   var json = {

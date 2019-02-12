@@ -1,3 +1,6 @@
+/**
+ * @fileOverview Manages all sessions connected through websocket
+ */
 const Session = require('./session')
 const Websocket = require('./websocket')
 

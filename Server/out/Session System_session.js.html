@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: routes/command.js</title>
+    <title>JSDoc: Source: Session System/session.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: routes/command.js</h1>
+    <h1 class="page-title">Source: Session System/session.js</h1>
 
     
 
@@ -27,14 +27,32 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @fileOverview Parses commands sent from user.
+ * @fileOverview A single session
  */
+var id = 0
 
-/**
-  * @param  {} msg
-  */
-module.exports.parse = function (msg) {
-  console.log(msg.split(' '))
+function getNextID () {
+  return id++
+}
+
+module.exports = class Session {
+  constructor (connection) {
+    this.connection = connection
+    this._autheticated = false
+    this.ID = getNextID()
+  }
+
+  get sessionConnection () {
+    return this.connection
+  }
+
+  set autheticated (value) {
+    this._autheticated = value
+  }
+
+  get autheticated () {
+    return this._autheticated
+  }
 }
 </code></pre>
         </article>
