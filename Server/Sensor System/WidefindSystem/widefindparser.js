@@ -17,20 +17,18 @@ module.exports.jsonify = function (data) {
   json.entities.push({
     id: data.id,
     type: 'human',
-    data: {
-      position: {
-        x: data.pos[0],
-        y: data.pos[2],
-        z: data.pos[1]
-      },
-      velocity: {
-        x: data.vel[0],
-        y: data.vel[2],
-        z: data.vel[1]
-      },
-      battery: data.bat,
-      signal: data.rssi
-    }
+	  position: {
+		  x: data.pos[0],
+		  y: data.pos[2],
+		  z: data.pos[1]
+	  },
+	  velocity: {
+		  x: data.vel[0],
+		  y: data.vel[2],
+		  z: data.vel[1]
+	  },
+	  battery: 0.9, //data.bat,
+	  signal: data.rssi
   })
 
   return JSON.stringify(json)
