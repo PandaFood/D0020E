@@ -3,6 +3,8 @@
  */
 
 const WEBSOCKET = require('ws')
+const SERVERIP = "130.240.5.135"
+
 
 module.exports = class WebsocketHandler {
   constructor (wss, session) {
@@ -41,6 +43,7 @@ function init (wss, session) {
     // TODO: FIX INITIAL CONFIG SENDING
     ws.send(JSON.stringify(INITALCONFIG))
     ws.send(JSON.stringify(INITALAUTH))
+    ws.send(JSON.stringify(INITIALTYPES))
   })
 }
 
@@ -54,4 +57,16 @@ const INITALAUTH = {
   'version': 1,
   'action': 3,
   'success': true
+}
+
+const INITIALTYPES = {
+  'version': 1,
+  'action': 4,
+  'types' : [
+    {
+      'type' : "human",
+      "iconURI" : `http://${SERVERIP}/images/iconmonstr-frown-thin-240.png`,
+      "displayName" : "Human"
+    }
+  ]
 }
