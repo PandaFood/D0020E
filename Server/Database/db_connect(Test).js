@@ -1,70 +1,67 @@
 var tunnel = require('tunnel-ssh');
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb";
+var rawconfig = require('../config');
+var config = rawconfig.database;
+
 
 /*
-        Set config to db log
+        Set config
 */
 
-var dbconfig = {
-    numberlogged: 20,
-    timeout: 1 //In minutes
-}
+// var config = {
+//   tunnel={
+//     username:'root',
+//     password:'vandrandelurar',
+//     host:'130.240.207.20',
+//     port:51315,
+//     dstHost:'127.0.0.1',
+//     dstPort:27017,
+//     localHost:'127.0.0.1',
+//     localPort: 27017
+//   },
 
-/*
-        Set spoof data config
-*/
+//   numberunits: 5,
+//   delay: 100,    //in ms delay per new data insert
+//   spooflogged: 20,
 
-var spoofconfig = {
-    numberunits: 5,
-    delay: 100,    //in ms delay per new data insert
-    numberlogged: 20
-}
+//   numberlogged: 20,
+//   timeout: 1 //In minutes
 
-/*
-        Set config for tunnel to ssh server
-*/
-
-var config = {
-  username:'root',
-  password:'vandrandelurar',
-  host:'130.240.207.20',
-  port:51315,
-  dstHost:'127.0.0.1',
-  dstPort:27017,
-  localHost:'127.0.0.1',
-  localPort: 27017,
-};
+// };
 
 /*
       Create tunnel to ssh client and connect to local instance of mongodb on ssh computer.
 */
-var server = tunnel(config, function(error, server) {
+
+module.exports = class databaseManager {
+  constructor() {
+    createTunnel();
+    clearInactive();
+  }
+}
+
+function createTunnel() {
+  var server = tunnel(config.tunnel, function(error, server) {
     if(error){
-        console.log("SSH connection error: " + error);
+      console.log("SSH connection error: " + error);
     }
     console.log("SSH connection established");
     MongoClient.connect(url, function(err, db){
-        if (err) throw err;
-        console.log("Database created");
+      if (err) throw err;
+      console.log("Database created");
   
-        // Select database
-        global.dbo = db.db("VandrandeLurar");
-  
-        dbo.createCollection("customers",function(err, res) {
-            if (err) throw err;
-            console.log("Collection created!");
-        });
-        clearInactive();
-        //spoofData(dbo);
-        //db.close();
-        //console.log("Database closed");
+      // Select database
+      global.dbo = db.db("VandrandeLurar");
     });
-});
+  });
+}
+
+
 
 /*
         Inserts data into mongodb server database and removes duplicates in database so it's just one "instance"
-        PARAM:  'indata' input data
+        @param: indata input data
 */
 
 function insertToDatabase(indata) {
@@ -75,34 +72,34 @@ function insertToDatabase(indata) {
     entities:[]
   };
   logjson.entities.push(indata);
-    var query = {id: indata.id}
-    dbo.collection("json").find(query).toArray(function(err,result) {
-      if (err) throw err;
-      if (result[0] != null) {
-        console.log(result[0]);
-        var myquery = { id: result[0].id };
-        dbo.collection("json").deleteOne(myquery, function(err, obj) {
-            if (err) throw err;
-            console.log("1 document deleted");
-            var myobj = logjson;
-            dbo.collection("json").insertOne(myobj, function(err, res) {
-                if (err) throw err;
-                console.log("1 document inserted");
-            });
-        });
-      } else {
+  var query = {id: indata.id}
+  dbo.collection("json").find(query).toArray(function(err,result) {
+    if (err) throw err;
+    if (result[0] != null) {
+      console.log(result[0]);
+      var myquery = { id: result[0].id };
+      dbo.collection("json").deleteOne(myquery, function(err, obj) {
+        if (err) throw err;
+          console.log("1 document deleted");
         var myobj = logjson;
         dbo.collection("json").insertOne(myobj, function(err, res) {
-            if (err) throw err;
+          if (err) throw err;
             console.log("1 document inserted");
-        });
-      };
-    });
+          });
+      });
+    } else {
+      var myobj = logjson;
+      dbo.collection("json").insertOne(myobj, function(err, res) {
+        if (err) throw err;
+        console.log("1 document inserted");
+      });
+    };
+  });
 };
 
 /*
         Inserts data into mongodb server database, into log collection, set number logged in config
-        PARAM:  'indata' input data
+        @param indata input data
 */
 
 function logInsert(indata) {
@@ -117,7 +114,7 @@ function logInsert(indata) {
   var result = dbo.collection("log").count(query, function(err,result){
     if (err) throw err;
     console.log(result);
-    if (result < dbconfig.numberlogged) {
+    if (result < config.numberlogged) {
       var myobj = logjson;
       dbo.collection("log").insertOne(myobj, function(err, res) {
         if (err) throw err;
@@ -140,7 +137,7 @@ function logInsert(indata) {
 
 /*
         Gets data fron active instances that matches 'id'
-        PARAM:  'id' id for searched unit
+        @param 'id' id for searched unit
 */
 
 function getById(id){
@@ -156,7 +153,7 @@ function getById(id){
 
 /*
         Gets data fron log that matches 'id'
-        PARAM:  'id' id for searched unit
+        @param id matcing id for searched unit
 */
 
 function getHistoryById(id) {
@@ -190,7 +187,7 @@ function getActiveUnits() {
 
 function clearInactive() {
   var datetime = new Date();
-  var newtime = datetime.getTime() - (dbconfig.timeout*1000*60);
+  var newtime = datetime.getTime() - (config.timeout*1000*60);
   var query = {date: {$lt: newtime}};
   //console.log(newtime);
   dbo.collection("json").deleteMany(query, function(err,res) {
@@ -201,10 +198,10 @@ function clearInactive() {
 
 /*
         Spoofs data and inserts it into database
-        PARAM:  'dbo' database instance
+        @param dbo database instance
 */
 
-function spoofData(dbo) {
+function spoofData() {
     global.lock = 0;
     if (lock == 0) {  
       lock = 1;
@@ -215,7 +212,7 @@ function spoofData(dbo) {
       };
   
       json.entities.push({
-        id:Math.floor(Math.random() * spoofconfig.numberunits), 
+        id:Math.floor(Math.random() * config.numberunits), 
         type:"human",
         data:{
           position:{
@@ -233,8 +230,8 @@ function spoofData(dbo) {
         }
       });
       console.log(json.entities[0]);
-      lockvar = setTimeout(function(){ spoofLogInsert(json.entities[0],dbo); },spoofconfig.delay);
-      //lockvar = setTimeout(function(){ insertSpoofData(json.entities[0],dbo); },spoofconfig.delay);
+      lockvar = setTimeout(function(){ spoofLogInsert(json.entities[0]); },config.delay);
+      //lockvar = setTimeout(function(){ insertSpoofData(json.entities[0]); },spoofconfig.delay);
     }
 }
 
@@ -242,7 +239,7 @@ function spoofData(dbo) {
         Helper function to spoofData
 */
   
-function insertSpoofData(indata,dbo) {
+function insertSpoofData(indata) {
     var query = {id: indata.id}
     dbo.collection("json").find(query).toArray(function(err,result) {
       if (err) throw err;
@@ -270,7 +267,7 @@ function insertSpoofData(indata,dbo) {
     spoofData(dbo);
 };
 
-function spoofLogInsert(indata,dbo) {
+function spoofLogInsert(indata) {
     var datetime = new Date().toLocaleString();
     var logjson = {
         id: indata.id,
@@ -282,7 +279,7 @@ function spoofLogInsert(indata,dbo) {
     var result = dbo.collection("log").count(query, function(err,result){
         if (err) throw err;
         console.log(result);
-        if (result < spoofconfig.numberlogged) {
+        if (result < config.numberlogged) {
             var myobj = logjson;
             dbo.collection("log").insertOne(myobj, function(err, res) {
             if (err) throw err;
