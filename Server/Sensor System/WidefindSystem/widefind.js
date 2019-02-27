@@ -3,12 +3,13 @@
  */
 var parser = require('./widefindparser')
 var rethink = require('rethinkdb')
+var config = require('../../config')
 
 /*  DB CONFIG  */
-const Host = '35.180.30.36'
-const Port = 28016
-const User = 'admin'
-const Pass = 'UnlikelySnuggleBuild'
+const Host = config.rethink.Host;
+const Port = config.rethink.Port;
+const User = config.rethink.User;
+const Pass = config.rethink.Pass;
 /* ----------- */
 
 /**
