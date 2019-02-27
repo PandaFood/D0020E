@@ -30,6 +30,7 @@ module.exports = function () {
         result.each(function (error, row) {
           if (error) { throw error }
 
+          console.log(row)
           var jsonData = parser.jsonify(row)
 
           callback(jsonData)
@@ -54,7 +55,7 @@ module.exports = function () {
         result.each(function (error, row) {
           if (error) { throw error }
 
-          callback(parser.jsonify(row))
+          callback(parser.jsonify(row.new_val))
         })
       })
     })
