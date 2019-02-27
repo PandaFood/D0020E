@@ -3,8 +3,7 @@
  */
 
 const WEBSOCKET = require('ws')
-const SERVERIP = "130.240.5.135"
-
+const SERVERIP = '127.0.0.1'
 
 module.exports = class WebsocketHandler {
   constructor (wss, session) {
@@ -14,8 +13,8 @@ module.exports = class WebsocketHandler {
   }
 
   sendUpdate (data) {
-    console.log('Broadcasting row... ')
-    console.log(data)
+    //console.log('Broadcasting row... ')
+    //console.log(data)
     this.wss.clients.forEach(function each (client) {
       if (client.readyState === WEBSOCKET.OPEN) {
         client.send(data)
@@ -44,6 +43,7 @@ function init (wss, session) {
     ws.send(JSON.stringify(INITALCONFIG))
     ws.send(JSON.stringify(INITALAUTH))
     ws.send(JSON.stringify(INITIALTYPES))
+    ws.send(JSON.stringify(INITBACKGROUND))
   })
 }
 
@@ -62,11 +62,24 @@ const INITALAUTH = {
 const INITIALTYPES = {
   'version': 1,
   'action': 4,
-  'types' : [
+  'types': [
     {
-      'type' : "human",
-      "iconURI" : `http://${SERVERIP}/images/iconmonstr-frown-thin-240.png`,
-      "displayName" : "Human"
+      'type': 'human',
+      'iconURI': `http://${SERVERIP}:3000/images/iconmonstr-frown-thin.png`,
+      'displayName': 'Human'
+    }
+  ]
+}
+
+const INITBACKGROUND = {
+  'version': 1,
+  'action': 5,
+  'images': [
+    {
+      'imageURI': `http://${SERVERIP}:3000/images/map.png`,
+      'position': { 'x': 0, 'y': 0, 'z': 0 },
+      'rotation': 45,
+      'scale': 180
     }
   ]
 }

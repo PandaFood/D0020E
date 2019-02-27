@@ -1,0 +1,61 @@
+
+/*
+Server to client: Send salt to client
+*/
+{
+	"version":1,
+	"action":1,
+	"salt":"245j2mwguhfhaize812356"
+}
+
+/*
+Client to server: Send client salt and hashed password to server
+Hash is calculated as SHA256HEXSTRING("VarnandeLurar" + serverSalt + SHA256HEXSTRING("VarnandeLurar" + password) + clientSalt)
+*/
+{
+	"version":1,
+	"action":2,
+	"salt":"j8pzauhqwpi583jhsdfaxzhgu8",
+	"hash":"6812f9518a85b81239c"
+}
+
+/*
+Server to client: Tell client the authorization succedded or failed
+Reason field is not needed if success is true
+*/
+{
+	"version":1,
+	"action":3,
+	"success":false,
+	"reason":"Wrong password"
+}
+
+/*
+Server to client: Add or change entity types
+*/
+{
+	"version":1,
+	"action":4,
+	"types":[
+		{
+			"type":"human",
+			"iconURI":"https://example.org/images/human.png"
+		}
+	]
+}
+
+/*
+Server to client: Client set map images
+*/
+{
+	"version":1,
+	"action":5,
+	"images":[
+		{
+			"imageURI":"https://example.org/images/map.png",
+			"position":{"x":0,"y":0,"z":0},
+			"rotation":45,
+			"scale":1
+		}
+	]
+}
