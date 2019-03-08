@@ -5,7 +5,7 @@
 /**
  * @constructor
  */
-module.exports = function (session) {
+module.exports = function (session, database) {
   console.log('Session set in consoleInput as ' + session)
 
   /**
@@ -28,6 +28,7 @@ module.exports = function (session) {
       //  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
       if (d.toString().trim() === 'u') {
         sensor.GetUpdates(session.sendUpdate.bind(session))
+        database.Log(session.sendUpdate.bind(session))
       }
       if (d.toString().trim() === 's') {
         sensor.StartWorker(session.sendUpdate.bind(session))
