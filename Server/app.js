@@ -12,6 +12,7 @@ var ConsoleInput = require('./consoleinput')
 var indexRouter = require('./routes/index')
 var SessionManager = require('./Session System/sessionManager')
 var SensorManager = require('./Sensor System/sensorManager')
+var DatabaseManager = require('./Database/databaseManager')
 
 var app = express()
 
@@ -36,7 +37,9 @@ var session = new SessionManager(wss)
 
 var sensors = new SensorManager()
 
-var cli = new ConsoleInput(session)
+var database = new DatabaseManager()
+
+var cli = new ConsoleInput(session,database)
 cli.start(sensors.wideFind, session)
 
 // Apply routes for HTML
