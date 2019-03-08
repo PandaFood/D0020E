@@ -5,11 +5,12 @@ var parser = require('./widefindparser')
 var rethink = require('rethinkdb')
 var config = require('../../config')
 
+
 /*  DB CONFIG  */
-const Host = config.rethink.Host;
-const Port = config.rethink.Port;
-const User = config.rethink.User;
-const Pass = config.rethink.Pass;
+const Host1 = config.rethink1.Host;
+const Port = config.rethink1.Port;
+const User = config.rethink1.User;
+const Pass = config.rethink1.Pass;
 /* ----------- */
 
 /**
@@ -23,7 +24,7 @@ module.exports = function () {
      * @returns {string} Returns data in standardized json string.
     */
   this.GetUpdates = function (callback) {
-    rethink.connect({ host: Host, port: Port, user: User, password: Pass }, function (error, database) {
+    rethink.connect({ host: Host1, port: Port, user: User, password: Pass }, function (error, database) {
       if (error) throw error
       rethink.db('wf100').table('current_state').run(database, function (error, result) {
         if (error) { throw error }
@@ -47,7 +48,7 @@ module.exports = function () {
      * @returns {string} Returns data in standardized json string.
     */
   this.StartWorker = function (callback) {
-    rethink.connect({ host: Host, port: Port, user: User, password: Pass }, function (error, database) {
+    rethink.connect({ host: Host1, port: Port, user: User, password: Pass }, function (error, database) {
       if (error) { throw error }
 
       rethink.db('wf100').table('current_state').changes().run(database, function (error, result) {
