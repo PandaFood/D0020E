@@ -8,7 +8,7 @@ var config = rawconfig.database;
 module.exports = class databaseManager {
   constructor() {
     createTunnel();
-    clearInactive();
+  //clearInactive();
   }
 
   Log (data) {
@@ -21,7 +21,7 @@ module.exports = class databaseManager {
 }
 
 function createTunnel() {
-  var server = tunnel(config.tunnel, function(error, server) {
+  var server = tunnel(rawconfig.tunnel, function(error, server) {
     if(error){
       console.log("SSH connection error: " + error);
     }
