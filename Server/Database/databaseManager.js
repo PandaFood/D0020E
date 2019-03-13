@@ -6,7 +6,8 @@ var config = rawconfig.database;
 
 
 module.exports = class databaseManager {
-  constructor() {
+  constructor(sens) {
+    global.sensor = sens;
     createTunnel();
   //clearInactive();
   }
@@ -15,6 +16,10 @@ module.exports = class databaseManager {
     clearInactive();
     logInsert(data);
     insertToDatabase(data);
+  }
+
+  Replay () {
+    headreplay();
   }
 
 
@@ -279,4 +284,34 @@ function spoofLogInsert(indata) {
     });
     lock = 0;
     spoofData(dbo);
+}
+
+/*
+*   Starter function to replay whole log, set delay in config
+*/
+function headreplay() {
+    dbo.collection("log").copyTo("templog",function(err,result){
+        if (err) throw err;
+        dbo.collection("templog").find().count(function(err,res){
+            if (err) throw err;
+            replaySpoof(res);
+        });
+    });
+}
+
+/*
+*   Helper to headreplay
+*/
+function replaySpoof(loop) {
+    dbo.collection("templog").findOne(function(err,res){
+        if (err) throw err;
+        var data = res.entities;
+        sensor.GetUpdates(data);
+        dbo.collection("templog").deleteOne(function(err,res){
+            if (err) throw err;
+        });
+    });
+    if(loop > 1) {
+        setTimeout(function(){ replaySpoof(loop-1); },config.delay);
+    }
 }
