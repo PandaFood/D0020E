@@ -289,12 +289,10 @@ function spoofLogInsert(indata) {
 *   Starter function to replay whole log, set delay in config
 */
 function headreplay(sens) {
-    dbo.collection("log").copyTo("templog",function(err,result){
-        if (err) throw err;
-        dbo.collection("templog").find().count(function(err,res){
-            if (err) throw err;
-            replaySpoof(res,sens);
-        });
+    dbo.log.find().forEach( function(x){dbo.templog.insert(x)} );
+    dbo.collection("templog").find().count(function(err,res){
+      if (err) throw err;
+      replaySpoof(res,sens);
     });
 }
 
