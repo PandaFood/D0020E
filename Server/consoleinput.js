@@ -28,7 +28,6 @@ module.exports = function (session, database) {
         //  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
         if (d.toString().trim() === 'u') {
           sensor.GetUpdates(session.sendUpdate.bind(session))
-          database.Log(session.sendUpdate.bind(session))
         }
         if (d.toString().trim() === 's') {
           sensor.StartWorker(session.sendUpdate.bind(session))
@@ -38,9 +37,12 @@ module.exports = function (session, database) {
           console.log(session.sessions)
         }
         if (d.toString().trim() == 'r') {
-            database.Replay(sensor);
+            database.Replay(session.sendUpdate.bind(session));
             console.log('Started replaying log')
         }
+        if (d.toString().trim() == 'b') {
+          database.Spoof();
+      }
       })
     }
   }

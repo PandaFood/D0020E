@@ -33,11 +33,12 @@ server.listen(process.env.PORT || 3000, () => {
   console.log(`Server started on port ${server.address().port}`)
 })
 
-var session = new SessionManager(wss)
+var database = new DatabaseManager()
+database.Start()
+
+var session = new SessionManager(wss,database)
 
 var sensors = new SensorManager()
-
-var database = new DatabaseManager()
 
 var cli = new ConsoleInput(session,database)
 cli.start(sensors.wideFind, session)

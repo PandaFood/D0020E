@@ -4,7 +4,7 @@
 
 var database = {
     numberunits: 5, //number of units logged
-    delay: 100,    //in ms delay per new data insert
+    delay: 1000,    //in ms delay per new data insert
     spooflogged: 20,
 
     numberlogged: 20,
