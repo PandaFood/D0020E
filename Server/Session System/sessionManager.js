@@ -3,9 +3,11 @@
  */
 const Session = require('./session')
 const Websocket = require('./websocket')
+var database;
 
 module.exports = class WSSession {
-  constructor (webSocketServer) {
+  constructor (webSocketServer,db) {
+    database = db;
     this.wss = webSocketServer
     console.log('Websocket server attatched: ' + this.wss)
     this.sessions = []
@@ -45,6 +47,8 @@ module.exports = class WSSession {
   }
 
   sendUpdate (data) {
+    //database.Log(data);
+    //console.log(data)
     this.webSocket.sendUpdate(data)
   }
 }
