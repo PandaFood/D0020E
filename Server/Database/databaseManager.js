@@ -3,25 +3,46 @@ var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb";
 var rawconfig = require('../config');
 var config = rawconfig.database;
+var replaystop = 0;
+var dbo;
 
 
-module.exports = class databaseManager {
-  constructor() {
-    createTunnel();
+//module.exports = class databaseManager {
+//  constructor() {
+//    createTunnel();
   //clearInactive();
+//  }
+
+
+
+//}
+
+module.exports = function() {
+  this.Start = function() {
+    createTunnel();
   }
 
-  Log (data) {
-    clearInactive();
-    logInsert(data);
-    insertToDatabase(data);
+  this.Replay = function(callback) {
+    replaystop = 1;
+    replayget(function(loop){
+      console.log(loop + " number of things in log");
+      replayloop(loop,callback);
+    });
   }
 
-  Replay (sens) {
-    headreplay(sens);
+  this.Log = function(data) {
+    if (replaystop > 0) {
+      clearInactive();
+    } else {
+      clearInactive();
+      logInsert(data);
+      insertToDatabase(data);
+    }
   }
 
-
+  this.Spoof = function() {
+    spoofData();
+  }
 }
 
 function createTunnel() {
@@ -35,7 +56,7 @@ function createTunnel() {
       console.log("Database created");
   
       // Select database
-      global.dbo = db.db("VandrandeLurar");
+      dbo = db.db("VandrandeLurar");
     });
   });
 }
@@ -195,22 +216,20 @@ function spoofData() {
       };
   
       json.entities.push({
-        id:Math.floor(Math.random() * config.numberunits), 
+        id:String(Math.floor(Math.random() * config.numberunits)), 
         type:"human",
-        data:{
-          position:{
+        position:{
+            x: 100*Math.random(),
+            y: 100*Math.random(),
+            z: 100*Math.random()
+        },
+        velocity:{
             x: Math.random(),
             y: Math.random(),
             z: Math.random()
-          },
-          velocity:{
-            x: Math.random(),
-            y: Math.random(),
-            z: Math.random()
-          },
-          battery: Math.random(),
-          signal: Math.random()
-        }
+        },
+        battery: Math.random(),
+        signal: Math.random()
       });
       console.log(json.entities[0]);
       lockvar = setTimeout(function(){ spoofLogInsert(json.entities[0]); },config.delay);
@@ -286,31 +305,54 @@ function spoofLogInsert(indata) {
 }
 
 /*
-*   Starter function to replay whole log, set delay in config
+*   Copies whole log to templog and fetches number in log
+*   @callback number in log
 */
-function headreplay(sens) {
-    dbo.log.find().forEach( function(x){dbo.templog.insert(x)} );
-    dbo.collection("templog").find().count(function(err,res){
-      if (err) throw err;
-      replaySpoof(res,sens);
+function replayget(callback) {
+  console.log("replayget")
+  dbo.collection("templog").drop(function(err,res){
+    if (err) throw err;
+    dbo.collection("log").find().forEach( function(x){
+      dbo.collection("templog").insertOne(x)
+    }).then(function(){
+      dbo.collection("templog").find().count(function(err,res){
+        if (err) throw err;
+        return callback(res);
+      });
     });
+  });
 }
 
+
 /*
-*   Helper to headreplay
+*   Loop to replay log, loop dictates how long to loop. Does callback with current item from log.
+    @param 'loop' number of loops to complete
+*   @callback item from log
 */
-function replaySpoof(loop,sens) {
-    dbo.collection("templog").findOne(function(err,res){
-        if (err) throw err;
-        var data = res.entities;
-        sens.GetUpdates(data);
-        dbo.collection("templog").deleteOne(function(err,res){
-            if (err) throw err;
-        });
+function replayloop(loop,callback) {
+  var data;
+  //console.log("loop "+loop)
+  dbo.collection("templog").findOne({},function(err,res){
+    if (err) throw err;
+    //console.log(res);
+    data = res.entities;
+    dbo.collection("templog").deleteOne({},function(err,res){
+      if (err) throw err;
     });
-    if(loop > 1) {
-        setTimeout(function(){ replaySpoof(loop-1,sens); },config.delay);
-    } else {
-      console.log('Replaying is done')
+    //console.log(data);
+    var json = {
+      version: 1,
+      action: 0,
+      entities: data
     }
+
+    console.log(json);
+    callback(json);
+  });
+  if (loop > 1) {
+    setTimeout(function(){ replayloop(loop-1,callback); },config.delay);
+  } else {
+    replaystop = 0;
+    console.log('Replaying is done')
+  }
 }
