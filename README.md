@@ -1,93 +1,100 @@
-# D0020E
-Varnande lurar
+# Varnande lurar
+
+By
+ Group 4
 
 
-# Git Tutorial (WIP)
+The project is built for the course D0020E at Luleå Tekniska Universitet. 
 
-#### Naming convention för branches
-##### To be determined
 
-### Instructions
+A web frontend and a backend delivering real-time sensor data from WideFind sensor system.
 
-För att klona repositoryn
-```
-git clone https://github.com/osksun/D0020E.git
-```
-Detta kommer att skapa en mapp som heter D0020E som är "up-to-date" med repon som ligger uppe på github.
-Gå in i mappen
+## Getting Started
 
-Efter att ha klonat repon defaultas man till branchen master.
-Du kan se vilken branch du är på genom att skriva (den som är markerad med * är den du är på)
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+You need the following installed:
+
+- [Node.js](https://nodejs.org)
+- npm (included in node.js) 
+
+### Installing
+
+Open the desired folder in a terminal.
+
+#### Server
+
+Install dependecies with
 ```
-git branch
-```
-Om du även vill se de branches som ligger på remoten lägger du till flaggan -a
-```
-git branch -a
-```
-(de branches som börjar med remotes/origin/ är de som ligger uppe på remoten och de övriga är de lokala på din maskin).
-För att skapa en ny branch skriver du
-```
-git branch <branchName>
+npm install
 ```
 
-För att byta till en branch skriver du
-```
-git checkout <branchName>
-```
-alternativt för att skapa och komma direkt till den nya branchen
-```
-git checkout -b <branchName>
-```
-när du branchar blir den nya en sub-branch av den branch du branchar ifrån.
-Med
-```
-git status
-```
-ser du alla filer du har ändrat på sedan den senaste committen och med 
-```
-git diff
-```
-ser du de exakta ändringarna.
-När du har gjort något du vill spara "committar" du det. För att markera vilka filer som ska commitas ("stageas") skriver du
-```
-git add <fileName>
-```
-eller för att stagea alla filer
-```
-git add -A
-```
-Sedan kan du committa ändringarna genom att skriva 
-```
-git commit -m <"This is a commit message">
-```
-Flaggan -m anger ett commit message och det är bra om du alltid skriver tydliga meddelanden.
-För att unstagea en fil skriver du
-```
-git reset HEAD <fileName>
-```
-För att "pusha" dina commits till github repon skriver du
-```
-git push origin <branchName>
-```
-Du bör pusha varje gång du slutar arbeta.
+And repeat
 
-Du kan ta bort en lokal branch (du kan inte vara på den branch du ska ta bort) genom
 ```
-git branch -D <branchName>
-```
-Det kan hända att din lokala branch ligger efter motsvarande branch som ligger uppe på servern, du drar då ner ändringar med
-```
-git pull origin <branchName>
-```
-Du bör köra pull varje gång du har varit borta från projektet.
-
-Det kan även hända att branches som ligger på github tas bort medans de ligger kvar på din maskin. För att uppdatera vilka branches som ligger på github skriver du
-```
-git remote update origin --prune
+until finished
 ```
 
-För att visa commit loggen för den branch du är på skriver du
+End with an example of getting some data out of the system or using it for a little demo
+
+
+#### Frontend
+
+
+
+## Running the tests
+
+Explain how to run the automated tests for this system
+
+### Break down into end to end tests
+
+Explain what these tests test and why
+
 ```
-git log
+Give an example
 ```
+
+### And coding style tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+## Deployment
+
+Add additional notes about how to deploy this on a live system
+
+## Built With
+
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+
+## Contributing
+
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+
+## Authors
+
+* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Hat tip to anyone whose code was used
+* Inspiration
+* etc
+
