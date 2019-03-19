@@ -1,93 +1,81 @@
-# D0020E
-Varnande lurar
+# Varnande Lurar
 
+This project was built for the course D0020E at Luleå Tekniska Universitet.
 
-# Git Tutorial (WIP)
+It contains a frontend website and a server. The website visualises data it gets via websocket from the server. 
+The data is real-time sensor data from WideFind sensors.
 
-#### Naming convention för branches
-##### To be determined
+## Getting Started
 
-### Instructions
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
-För att klona repositoryn
-```
-git clone https://github.com/osksun/D0020E.git
-```
-Detta kommer att skapa en mapp som heter D0020E som är "up-to-date" med repon som ligger uppe på github.
-Gå in i mappen
+### Prerequisites
 
-Efter att ha klonat repon defaultas man till branchen master.
-Du kan se vilken branch du är på genom att skriva (den som är markerad med * är den du är på)
+For compiling this project you need
+
+- [Node.js](https://nodejs.org)
+- npm (included in node.js installation)
+
+### Installing
+
+Open the folder for the part you want to compile in a terminal.
+
+#### Server
+First, install the dependencies using
 ```
-git branch
-```
-Om du även vill se de branches som ligger på remoten lägger du till flaggan -a
-```
-git branch -a
-```
-(de branches som börjar med remotes/origin/ är de som ligger uppe på remoten och de övriga är de lokala på din maskin).
-För att skapa en ny branch skriver du
-```
-git branch <branchName>
+npm install
 ```
 
-För att byta till en branch skriver du
-```
-git checkout <branchName>
-```
-alternativt för att skapa och komma direkt till den nya branchen
-```
-git checkout -b <branchName>
-```
-när du branchar blir den nya en sub-branch av den branch du branchar ifrån.
-Med
-```
-git status
-```
-ser du alla filer du har ändrat på sedan den senaste committen och med 
-```
-git diff
-```
-ser du de exakta ändringarna.
-När du har gjort något du vill spara "committar" du det. För att markera vilka filer som ska commitas ("stageas") skriver du
-```
-git add <fileName>
-```
-eller för att stagea alla filer
-```
-git add -A
-```
-Sedan kan du committa ändringarna genom att skriva 
-```
-git commit -m <"This is a commit message">
-```
-Flaggan -m anger ett commit message och det är bra om du alltid skriver tydliga meddelanden.
-För att unstagea en fil skriver du
-```
-git reset HEAD <fileName>
-```
-För att "pusha" dina commits till github repon skriver du
-```
-git push origin <branchName>
-```
-Du bör pusha varje gång du slutar arbeta.
+Configure the specific settings in the `config.js` file.
 
-Du kan ta bort en lokal branch (du kan inte vara på den branch du ska ta bort) genom
-```
-git branch -D <branchName>
-```
-Det kan hända att din lokala branch ligger efter motsvarande branch som ligger uppe på servern, du drar då ner ändringar med
-```
-git pull origin <branchName>
-```
-Du bör köra pull varje gång du har varit borta från projektet.
+Start it using
 
-Det kan även hända att branches som ligger på github tas bort medans de ligger kvar på din maskin. För att uppdatera vilka branches som ligger på github skriver du
 ```
-git remote update origin --prune
+npm start
 ```
 
-För att visa commit loggen för den branch du är på skriver du
-```
-git log
-```
+When it's up and running you get several different options to enter in the terminal
+
+    u            Gets the latest data from the widefind database and transmits it.
+    s            Starts listening for updates on the widefind database and transmits new data when it arrives.
+    a            Gets all active sessions.
+    r            Starts replaying data from the mongoDB.
+    b            Spoofs some locationdata.
+    h            Displays this help.
+
+
+
+#### Website
+
+Just open `index.html` in any modern browser.
+
+Connect to the server by entering its IP-address.
+
+
+## Built With
+
+#### Server
+
+* [Node.js](https://nodejs.org) - The JavaScript Compiler
+* [npm](https://www.npmjs.com/) - Dependency Management
+* [MongoDB](https://www.mongodb.com/) - The persistent storage
+* [RethinkDB](https://www.rethinkdb.com/) - The sensor database
+* [Express](https://www.npmjs.com/package/express) - The Web framework
+* [WS](https://www.npmjs.com/package/ws) - The Websocket framework
+
+
+
+#### Website
+
+* [Three.js](https://threejs.org/) - Library for rendering WebGL in JavaScript
+
+## Guides
+
+[Git Guide](/docs/GITGUIDE.md), courtesy of @MTBorg
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+

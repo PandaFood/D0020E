@@ -11,15 +11,15 @@ var database = {
     timeout: 1, //In minutes
 };
 var rethink1 = {
-    Host:'35.180.30.36',
+    Host:'ip',
     Port:28016,
     User:'admin',
-    Pass:'***REMOVED***'
+    Pass:'password'
 };
 var tunnel = {
     username:'root',
     password:'vandrandelurar',
-    host:'130.240.207.20',
+    host:'ip',
     port:51315,
     dstHost:'127.0.0.1',
     dstPort:27017,
