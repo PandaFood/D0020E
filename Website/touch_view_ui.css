@@ -1,0 +1,79 @@
+
+.touch_view_ui {
+	position:absolute;
+	z-index:-1;
+	margin:0;
+	padding:0;
+	width:100%;
+	height:calc(100% - 80px);
+	pointer-events:none !important;
+}
+
+.touch_view_ui > .arrows {
+	margin:0;
+	padding:0;
+	position:absolute;
+	right:0;
+	top:0;
+}
+
+.touch_view_ui > .arrows > div {
+	margin:6px;
+	padding:0;
+	width:64px;
+	height:64px;
+	border-radius:5px;
+	background-color:#507fef;
+	background-size:32px;
+	background-repeat:no-repeat;
+	box-shadow:0 0 5px 0 rgba(0,0,0,0.6) inset;
+	cursor:pointer;
+	pointer-events:auto;
+}
+.touch_view_ui > .arrows > div:first-of-type {
+	background-position:center 15px;
+	background-image:url("images/arrow_up.png");
+}
+.touch_view_ui > .arrows > div:last-of-type {
+	background-position:center 18px;
+	background-image:url("images/arrow_down.png");
+}
+@media (hover:hover) {
+	.touch_view_ui > .arrows > div:hover {
+		background-color:#658ff5;
+	}
+}
+.touch_view_ui > .arrows > div:active {
+	background-color:#3c66c9;
+}
+.touch_view_ui > .arrows > div.disabled {
+	background-color:#aaa;
+	cursor:default;
+}
+
+.touch_view_ui > div.home {
+	position:absolute;
+	right:0;
+	bottom:0;
+	margin:7px 6px;
+	padding:0;
+	width:64px;
+	height:64px;
+	border-radius:5px;
+	background-color:#507fef;
+	background-image:url("images/home.png");
+	background-size:32px;
+	background-position:center center;
+	background-repeat:no-repeat;
+	box-shadow:0 0 5px 0 rgba(0,0,0,0.6) inset;
+	cursor:pointer;
+	pointer-events:auto;
+}
+@media (hover:hover) {
+	.touch_view_ui > div.home:hover {
+		background-color:#658ff5;
+	}
+}
+.touch_view_ui > div.home:active {
+	background-color:#3c66c9;
+}

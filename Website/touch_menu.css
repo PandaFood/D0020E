@@ -1,0 +1,36 @@
+
+.touch_menu {
+	display:none;
+	margin:0;
+	padding:2px;
+	width:calc(100% - 2px - 2px);
+	height:calc(100% - 80px);
+	background:#829fe3;
+	overflow-y:auto;
+}
+
+.touch_menu > div {
+	margin:8px auto;
+	padding:30px;
+	width:calc(100% - 30px - 30px - 10px);
+	border-radius:10px;
+	background:#507fef;
+	box-shadow:0 0 5px 0 rgba(0,0,0,0.6) inset;
+	font-size:32px;
+	color:#fff;
+	text-shadow:1px 1px 2px rgba(0,0,0,0.75);
+	text-align:center;
+	cursor:pointer;
+}
+@media (hover:hover) {
+	.touch_menu > div:hover {
+		background:#658ff5;
+	}
+}
+.touch_menu > div:active {
+	background:#3c66c9;
+}
+.touch_menu > div.disabled {
+	background:#4e5668;
+	cursor:default;
+}

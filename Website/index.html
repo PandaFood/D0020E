@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Varnande Lurar</title>
+
+		<meta name="viewport" content="width=device-width, height=device-height, minimum-scale=1, maximum-scale=1, initial-scale=1, user-scalable=no">
+
+		<style>
+			html, body {
+				margin:0;
+				padding:0;
+				overflow:hidden;
+			}
+			#background, #overlay {
+				position:absolute;
+				left:0;
+				top:0;
+				margin:0;
+				padding:0;
+				width:100%;
+				height:100%;
+			}
+			#view {
+				position:absolute;
+				left:0;
+				top:0;
+				margin:0;
+				padding:0;
+				width:100%;
+				height:100%;
+				overflow:hidden;
+			}
+			#ui {
+				position:absolute;
+				z-index:1;
+				left:0;
+				top:0;
+				margin:0;
+				padding:0;
+				width:100%;
+				height:100%;
+				pointer-events:none;
+			}
+			#ui * {
+				pointer-events:auto;
+			}
+		</style>
+		<link rel="stylesheet" type="text/css" href="fonts.css">
+		<link rel="stylesheet" type="text/css" href="touch_alert.css">
+		<link rel="stylesheet" type="text/css" href="touch_info.css">
+		<link rel="stylesheet" type="text/css" href="touch_login.css">
+		<link rel="stylesheet" type="text/css" href="touch_menu.css">
+		<link rel="stylesheet" type="text/css" href="touch_navigation.css">
+		<link rel="stylesheet" type="text/css" href="touch_search.css">
+		<link rel="stylesheet" type="text/css" href="touch_view_ui.css">
+	</head>
+	<body>
+		<canvas id="background"></canvas>
+		<div id="view"></div>
+		<canvas id="overlay"></canvas>
+		<div id="ui"></div>
+
+		<script src="js/sjcl.js" defer></script>
+		<script src="polyfill.js" defer></script>
+
+		<script src="alert.js" defer></script>
+		<script src="alert_model.js" defer></script>
+		<script src="alert_shape_cylinder.js" defer></script>
+		<script src="camera2d.js" defer></script>
+		<script src="entity.js" defer></script>
+		<script src="entity_interaction.js" defer></script>
+		<script src="entity_model.js" defer></script>
+		<script src="entity_type.js" defer></script>
+		<script src="fake_server.js" defer></script>
+		<script src="network.js" defer></script>
+		<script src="touch_alert.js" defer></script>
+		<script src="touch_info.js" defer></script>
+		<script src="touch_login.js" defer></script>
+		<script src="touch_menu.js" defer></script>
+		<script src="touch_navigation.js" defer></script>
+		<script src="touch_search.js" defer></script>
+		<script src="touch_ui.js" defer></script>
+		<script src="touch_view_ui.js" defer></script>
+		<script src="view2d.js" defer></script>
+		<script src="user_data.js" defer></script>
+		<script src="world_model.js" defer></script>
+		<script src="main.js" defer></script>
+	</body>
+</html>

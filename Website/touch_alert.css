@@ -1,0 +1,41 @@
+
+.touch_alert {
+	display:none;
+	margin:0;
+	padding:2px;
+	width:calc(100% - 2px - 2px);
+	height:calc(100% - 80px);
+	background:#829fe3;
+	overflow-y:auto;
+}
+
+.touch_alert > div {
+	display:block;
+	margin:1px 2px;
+	padding:30px 20px;
+	width:calc(100% - 20px - 20px - 2px - 2px);
+	border-radius:10px;
+	background:#7392db;
+	box-shadow:0 0 4px 0 rgba(0,0,0,0.5) inset;
+}
+.touch_alert > div:last-of-type {
+	margin-bottom:8px;
+}
+
+.touch_alert > div > img {
+	display:inline-block;
+	margin:0 8px 4px 0;
+	padding:0;
+	vertical-align:middle;
+	width:40px;
+}
+
+.touch_alert > div > p {
+	display:inline;
+	margin:0;
+	padding:0;
+	font-size:20px;
+	font-weight:normal;
+	color:#fff;
+	text-shadow:1px 1px 1px rgba(0,0,0,0.75);
+}

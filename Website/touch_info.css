@@ -1,0 +1,83 @@
+
+.touch_info {
+	display:none;
+	position:absolute;
+	left:0;
+	top:0;
+	margin:0;
+	padding:0;
+	width:100%;
+	height:calc(100% - 80px);
+	background:#829fe3;
+	overflow-y:auto;
+}
+
+.touch_info .close {
+	position:absolute;
+	top:0;
+	right:0;
+	margin:12px;
+	padding:0;
+	width:64px;
+	height:64px;
+	border-radius:6px;
+	background-repeat:no-repeat;
+	background-image:url("images/close.png");
+	background-position:center;
+	background-size:38px;
+	background-color:#507fef;
+	box-shadow:0 0 5px 0 rgba(0,0,0,0.4) inset;
+	cursor:pointer;
+}
+@media (hover:hover) {
+	.touch_info .close:hover {
+		background-color:#658ff5;
+	}
+}
+.touch_info .close:active {
+	background-color:#3c66c9;
+}
+
+.touch_info h1 {
+	margin:12px;
+	padding:0;
+	width:calc(100% - 110px);
+	word-wrap:break-word;
+	font-size:40px;
+	font-weight:normal;
+	color:#fff;
+	text-shadow:1px 1px 2px rgba(0,0,0,0.75);
+}
+.touch_info p {
+	margin:2px 12px;
+	padding:0;
+	font-size:18px;
+	color:#fff;
+	text-shadow:1px 1px 1px rgba(0,0,0,0.75);
+}
+
+.touch_info .button {
+	margin:8px auto;
+	padding:10px;
+	width:calc(100% - 10px - 10px - 8px - 8px);
+	border-radius:10px;
+	background:#507fef;
+	box-shadow:0 0 5px 0 rgba(0,0,0,0.6) inset;
+	font-size:18px;
+	color:#fff;
+	text-shadow:1px 1px 1px rgba(0,0,0,0.75);
+	text-align:center;
+	cursor:pointer;
+}
+@media (hover:hover) {
+	.touch_info .button:hover {
+		background:#658ff5;
+	}
+}
+.touch_info .button:active {
+	background:#3c66c9;
+}
+.touch_info .button.disabled {
+	background:#4e5668;
+	cursor:default;
+}
